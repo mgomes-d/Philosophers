@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:40 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/22 07:53:04 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/24 09:05:54 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_atoi(const char *str)
 			return (-1);
 		if (nb < INT_MIN)
 			return (-1);
+		i++;
 	}
 	return (nb);
 }
