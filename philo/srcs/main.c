@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 08:56:20 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/24 10:32:08 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/26 19:21:46 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,50 @@ int	init_mutex(t_data *data)
 	return (0);
 }
 
-int	eating(t_philo *philo)
+int	sleeping(t_philo *philo)
+{
+	printf("philo %d is sleeping\n", philo->philo_id);
+	usleep(philo->data->time_to_sleep);
+	return (0);
+}
+
+int	counter_for_die(t_philo *philo)
 {
 	(void)philo;
+	return (0);
+}
+
+int	eating(t_philo *philo)
+{
 	pthread_mutex_lock(philo->left_fork);
 	printf("philo %d has taken a fork\n", philo->philo_id);
 	pthread_mutex_lock(philo->right_fork);
 	printf("philo %d has taken a fork\n", philo->philo_id);
 	printf("philo %d is eating\n", philo->philo_id);
+	usleep(philo->data->time_to_eat);
+	philo->meals_time += 1;
 	pthread_mutex_unlock(philo->left_fork);
  	pthread_mutex_unlock(philo->right_fork);
-	usleep(50000);
-	 return (0);
+	return (0);
 }
 
 void	*routine(void *philo_ptr)
 {
-	int	i;
+	int		i;
+	t_philo	*philo;
 
 	i = 0;
-	// while (i++ < 5)
-	// {
-	// 	write(2, "fd\n", 3);
+	philo = philo_ptr;
+	//philo->data->timestamp_ms = gettimeofday(&philo->data->test, 0);
+	while (i++ < 3)
+	{
 		eating(philo_ptr);
-//	}
+		sleeping(philo_ptr);
+		if (!philo->data->is_alive || philo->data->nb_must_eat <= \
+		philo->meals_time)
+			break;
+	}
+	//printf("time = %ld\n", philo->data->test.tv_sec);
 	return (NULL);
 }
 

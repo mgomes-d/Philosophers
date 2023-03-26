@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:22 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/24 10:28:35 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/26 19:21:18 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <limits.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <sys/time.h>
 
 int	ft_atoi(const char *str);
 
@@ -28,6 +29,7 @@ typedef struct s_philo
 	int				philo_id;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	int				meals_time;
 }	t_philo;
 
 typedef struct s_data
@@ -38,6 +40,8 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				nb_must_eat;
 	bool			is_alive;
+	int				timestamp_ms;
+	struct timeval	test;
 	t_philo			*philo;
 	pthread_t		*philosophers;
 	pthread_mutex_t	*fork;
