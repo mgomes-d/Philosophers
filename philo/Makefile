@@ -6,7 +6,7 @@
 #    By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/21 07:42:21 by mgomes-d          #+#    #+#              #
-#    Updated: 2023/03/24 10:18:54 by mgomes-d         ###   ########.fr        #
+#    Updated: 2023/03/27 07:43:19 by mgomes-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ SRCS_DIR = srcs
 OBJS_DIR = objs
 
 SRCS =	main.c \
-		utils.c
+		utils.c \
+		init.c \
+		error.c
 
 OBJS = $(addprefix ${OBJS_DIR}/, ${SRCS:%.c=%.o})
 
