@@ -55,7 +55,8 @@ int	eating(t_philo *philo)
 	pthread_mutex_lock(philo->right_fork);
 	printf("%d %d has taken a fork\n", get_time(philo), philo->philo_id);
 	printf("%d %d is eating\n", get_time(philo), philo->philo_id);
-	philo->meals_time += 1;
+	Lock mutex data here.
+philo->meals_time += 1;
 	usleep(philo->data->time_to_eat * 1000);
 	philo->time_last_meal = get_time(philo);
 	pthread_mutex_unlock(philo->left_fork);
