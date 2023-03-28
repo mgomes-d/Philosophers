@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:39:01 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/27 11:03:24 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:20:51 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,53 @@ int	init_struct(t_data *data, char **av, int ac)
 	return (0);
 }
 
+int	eating_philo(t_data *data)
+{
+	int		i;
+	int		last_meal;
+	int		time;
+	int		nb_philo;
+	int		time_to_die;
+	
+	i = 0;
+	pthread_mutex_lock(&data->lock_data);
+	nb_philo = data->nb_philo;
+	time_to_die = data->time_to_die;
+	pthread_mutex_unlock(&data->lock_data);
+	while (i < nb_philo)
+	{
+		pthread_mutex_lock(&data->lock_data);
+		last_meal = data->philo[i].time_last_meal;
+		time = get_time(&data->philo[i]);
+		pthread_mutex_unlock(&data->lock_data);
+		if ((time - last_meal >= time_to_die))
+		{
+			pthread_mutex_lock(&data->lock_data);
+			data->is_alive = 0;
+			pthread_mutex_unlock(&data->lock_data);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	monitoring(t_data *data)
 {
-	int	now_time;
-	int	last_time;
-	int	result;
-	int	i;
+	int	is_alive;
 
-	i = 0;
-	while (i++ < 10)
+
+	pthread_mutex_lock(&data->lock_data);
+	is_alive = data->is_alive;
+	pthread_mutex_unlock(&data->lock_data);
+	while (is_alive)
 	{
-		last_time = data->philo[i].time_last_meal;
-		now_time = get_time(data->philo[i]);
-		pthread_mutex_lock(&data->lock_data);
-		result = (now_time - last_time) - data->time_to_die;
-		pthread_mutex_unlock(&data->lock_data);
-		if (result > 0)
-			break;
+		write(2, "F\n", 2);
+		if (eating_philo(data))
+			exit(777);
+		usleep(100000);
 	}
+	return (0);
 }
 
 int	init_thread(t_data *data)

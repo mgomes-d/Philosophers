@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:22 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/27 10:38:02 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:17:51 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <stdbool.h>
 # include <sys/time.h>
 
+# define MSG_EAT "is eating"
+# define MSG_THINK "is thinking"
+# define MSG_FORK "has taken a fork"
+# define MSG_SLEEP "is sleeping"
+# define MSG_DIE "died"
 
 typedef struct s_philo
 {
@@ -57,5 +62,6 @@ int		init_thread(t_data *data);
 int		init_mutex(t_data *data);
 void	*routine(void *philo_ptr);
 int		error_exit(t_data *data);
+int		get_time(t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 08:56:20 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/27 11:01:24 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:12:09 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,6 @@ int	ft_check_args(char **av)
 	return (0);
 }
 
-int	get_time(t_philo *philo)
-{
-	struct timeval	time;
-	int				time_int;
-	int				final_time;
-
-	pthread_mutex_lock(&philo->data->lock_data);
-	if ((gettimeofday(&time, 0)) == -1)
-		return (-1);
-	time_int = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	final_time = time_int - philo->data->start_time;
-	pthread_mutex_unlock(&philo->data->lock_data);
-	return (final_time);
-}
-
 int	sleeping(t_philo *philo)
 {
 	printf("%d %d is sleeping\n", get_time(philo), philo->philo_id);
@@ -71,8 +56,8 @@ int	eating(t_philo *philo)
 	printf("%d %d has taken a fork\n", get_time(philo), philo->philo_id);
 	printf("%d %d is eating\n", get_time(philo), philo->philo_id);
 	philo->meals_time += 1;
-	philo->time_last_meal = get_time(philo);
 	usleep(philo->data->time_to_eat * 1000);
+	philo->time_last_meal = get_time(philo);
 	pthread_mutex_unlock(philo->left_fork);
  	pthread_mutex_unlock(philo->right_fork);
 	return (0);
@@ -91,17 +76,21 @@ void	*routine(void *philo_ptr)
 	bool	is_alive;
 
 	philo = philo_ptr;
-	pthread_mutex_lock(&philo->data->lock_data);
+	pthread_mutex_lock(&philo->data->lock_data_philo);
 	must_eat = philo->data->nb_must_eat;
 	is_alive = philo->data->is_alive;
-	pthread_mutex_unlock(&philo->data->lock_data);
+	pthread_mutex_unlock(&philo->data->lock_data_philo);
 	while (is_alive && (must_eat > 0 || must_eat == -1))
 	{
 		eating(philo_ptr);
 		sleeping(philo_ptr);
 		thinking(philo_ptr);
-		is_alive = 0;
+		pthread_mutex_lock(&philo->data->lock_data_philo);
+		is_alive = philo->data->is_alive;
+		pthread_mutex_unlock(&philo->data->lock_data_philo);
+		write(2, "D\n", 2);
 	}
+	printf("is alive = %d\n", is_alive);
 	//philo->data->timestamp_ms = gettimeofday(&philo->data->test, 0);
 	//printf("time = %ld\n", philo->data->test.tv_sec);
 	return (NULL);
