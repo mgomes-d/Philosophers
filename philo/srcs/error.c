@@ -6,15 +6,20 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:41:56 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/27 07:42:45 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:27:33 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	error_exit(t_data *data)
+int	error_exit(t_data *data, char *msg)
 {
 	(void)data;
-	write(2, "ERROR\n", 6);
+	int	i;
+
+	i = 0;
+	while (msg[i])
+		i++;
+	write (2, msg, i);
 	return (1);
 }

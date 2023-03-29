@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:22 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/28 11:17:51 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:28:02 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,15 @@ int		init_struct(t_data *data, char **av, int ac);
 int		init_thread(t_data *data);
 int		init_mutex(t_data *data);
 void	*routine(void *philo_ptr);
-int		error_exit(t_data *data);
-int		get_time(t_philo *philo);
+int		get_time_philo(t_philo *philo);
+int		get_time(void);
+void	ft_usleep(int ms);
+int		monitoring(t_data *data);
+void	show_msg(t_philo *philo, char *msg);
+/*parsing*/
+int		ft_check_args(char **av);
+int		struct_check(t_data *data);
+/*error*/
+int		error_exit(t_data *data, char *msg);
 
 #endif

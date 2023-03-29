@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:40 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/28 11:18:02 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/29 11:00:38 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,47 @@ int	ft_atoi(const char *str)
 	return (nb);
 }
 
-int	get_time(t_philo *philo)
+int	get_time(void)
 {
 	struct timeval	time;
-	int				time_int;
+
+	if ((gettimeofday(&time, NULL)) == -1)
+		return (-1);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+int	get_time_philo(t_philo *philo)
+{
+	int				time;
 	int				final_time;
 
 	pthread_mutex_lock(&philo->data->lock_data);
-	if ((gettimeofday(&time, 0)) == -1)
-		return (-1);
-	time_int = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	final_time = time_int - philo->data->start_time;
+	time = get_time();
+	final_time = time - philo->data->start_time;
 	pthread_mutex_unlock(&philo->data->lock_data);
 	return (final_time);
+}
+
+void	ft_usleep(int ms)
+{
+	int	start;
+
+	start = get_time();
+	while (get_time() - start < ms)
+		usleep(100);
+}
+
+void	show_msg(t_philo *philo, char *msg)
+{
+	int	time;
+	int	is_alive;
+
+	
+	pthread_mutex_lock(&philo->data->lock_data);
+	is_alive = philo->data->is_alive;
+	pthread_mutex_unlock(&philo->data->lock_data);
+	time = get_time_philo(philo);
+	if (is_alive)
+		printf("%d %d %s\n", time, philo->philo_id, msg);
+	return ;
 }
