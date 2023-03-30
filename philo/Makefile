@@ -6,15 +6,14 @@
 #    By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/21 07:42:21 by mgomes-d          #+#    #+#              #
-#    Updated: 2023/03/29 10:52:57 by mgomes-d         ###   ########.fr        #
+#    Updated: 2023/03/30 10:20:35 by mgomes-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror $(THREAD_FLAG)
-CFLAGS += -g -pthread
+CFLAGS = -Wall -Wextra -Werror #$(THREAD_FLAG)
 THREAD_FLAG = -fsanitize=thread
 RM = rm -rf
 
@@ -27,7 +26,9 @@ SRCS =	main.c \
 		init.c \
 		error.c \
 		monitoring.c \
-		parsing.c
+		parsing.c \
+		routine.c \
+		utils_2.c
 
 OBJS = $(addprefix ${OBJS_DIR}/, ${SRCS:%.c=%.o})
 
@@ -49,7 +50,7 @@ ${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c | ${OBJS_DIR}
 
 ${NAME}: ${OBJS}
 	@${CC} ${CFLAGS} ${OBJS} -o ${NAME}
-	@echo "${COLOR_CYAN}${NAME} ${COLOR_GREEN}${OBJS_DIR} were created${COLOR_RESET}"
+	@echo "\n${COLOR_CYAN}${NAME} ${COLOR_GREEN}${OBJS_DIR} were created${COLOR_RESET}"
 	@echo "${COLOR_CYAN}${NAME} ${COLOR_GREEN}${NAME} was created${COLOR_RESET}"
 
 clean:

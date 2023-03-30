@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:39:01 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/29 11:02:11 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:32:54 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_philo(t_data *data)
 	i = 0;
 	data->philo = malloc(sizeof(t_philo) * data->nb_philo);
 	if (!data->philo)
-		return (error_exit(data));
+		return (1);
 	while (i < data->nb_philo)
 	{
 		data->philo[i].philo_id = i + 1;
@@ -28,7 +28,7 @@ int	init_philo(t_data *data)
 		if (i == 0)
 		{
 			data->philo[i].left_fork = &data->fork[data->nb_philo - 1];
-			data->philo[i].right_fork = &data->fork[i];	
+			data->philo[i].right_fork = &data->fork[i];
 		}
 		else
 		{
@@ -51,13 +51,13 @@ int	init_struct(t_data *data, char **av, int ac)
 	else
 		data->nb_must_eat = -2;
 	if (struct_check(data))
-		return (1);
+		return (error_exit(data, MSG_ARG, 0));
 	data->start_time = get_time();
 	data->is_alive = 1;
 	if (init_mutex(data))
 		return (1);
 	if (init_philo(data))
-		return (1);
+		return (error_exit(data, MSG_MALLOC, 1));
 	if (init_thread(data))
 		return (1);
 	return (0);
@@ -70,11 +70,12 @@ int	init_thread(t_data *data)
 	i = 0;
 	data->philosophers = malloc(sizeof(pthread_t) * data->nb_philo);
 	if (!data->philosophers)
-		return (error_exit(data));
+		return (error_exit(data, MSG_MALLOC, 2));
 	while (i < data->nb_philo)
 	{
-		if (pthread_create(&data->philosophers[i], NULL, &routine, &data->philo[i]) != 0)
-			return (error_exit(data));
+		if (pthread_create(&data->philosophers[i], NULL, \
+		&routine, &data->philo[i]) != 0)
+			return (error_exit(data, MSG_THREAD, 3));
 		i++;
 	}
 	monitoring(data);
@@ -88,14 +89,14 @@ int	init_mutex(t_data *data)
 	i = 0;
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->fork)
-		return (1);
+		return (error_exit(data, MSG_MALLOC, 0));
 	while (i < data->nb_philo)
 	{
 		if (pthread_mutex_init(&data->fork[i], NULL) != 0)
-			return (1);
+			return (error_exit(data, MSG_MUTEX, 1));
 		i++;
 	}
 	if (pthread_mutex_init(&data->lock_data, NULL) != 0)
-		return (1);
+		return (error_exit(data, MSG_MUTEX, 1));
 	return (0);
 }

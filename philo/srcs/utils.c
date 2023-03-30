@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:40 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/29 11:00:38 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:26:31 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_atoi(const char *str)
 	int		i;
 
 	i = 0;
+	nb = 0;
 	while (str[i] >= 48 && str[i] <= 57)
 	{
 		nb = nb * 10 + str[i] - 48;
@@ -65,7 +66,6 @@ void	show_msg(t_philo *philo, char *msg)
 	int	time;
 	int	is_alive;
 
-	
 	pthread_mutex_lock(&philo->data->lock_data);
 	is_alive = philo->data->is_alive;
 	pthread_mutex_unlock(&philo->data->lock_data);

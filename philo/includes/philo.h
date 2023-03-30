@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:22 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/29 11:28:02 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:39:45 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # define MSG_FORK "has taken a fork"
 # define MSG_SLEEP "is sleeping"
 # define MSG_DIE "died"
+# define MSG_ARG "Error : invalid arguments\n"
+# define MSG_MUTEX "Error : mutex failed\n"
+# define MSG_MALLOC "Error : malloc failed\n"
+# define MSG_THREAD "Error : thread failed\n"
 
 typedef struct s_philo
 {
@@ -55,21 +59,29 @@ typedef struct s_data
 	pthread_mutex_t	lock_data;
 }	t_data;
 
-int		ft_atoi(const char *str);
+/*init*/
 int		init_philo(t_data *data);
 int		init_struct(t_data *data, char **av, int ac);
 int		init_thread(t_data *data);
 int		init_mutex(t_data *data);
-void	*routine(void *philo_ptr);
-int		get_time_philo(t_philo *philo);
-int		get_time(void);
-void	ft_usleep(int ms);
+/*monitoring*/
 int		monitoring(t_data *data);
-void	show_msg(t_philo *philo, char *msg);
+/*routine*/
+void	*routine(void *philo_ptr);
 /*parsing*/
 int		ft_check_args(char **av);
 int		struct_check(t_data *data);
 /*error*/
-int		error_exit(t_data *data, char *msg);
+void	free_everthing(t_data *data);
+int		error_exit(t_data *data, char *msg, int i);
+/*utils*/
+int		ft_atoi(const char *str);
+int		get_time_philo(t_philo *philo);
+int		get_time(void);
+void	ft_usleep(int ms);
+void	show_msg(t_philo *philo, char *msg);
+/*utils_2*/
+int		join_threads(t_data *data);
+int		destroy_mutex(t_data *data);
 
 #endif

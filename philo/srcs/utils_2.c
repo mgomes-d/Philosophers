@@ -1,49 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/29 10:52:34 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/30 11:11:44 by mgomes-d         ###   ########.fr       */
+/*   Created: 2023/03/30 09:50:27 by mgomes-d          #+#    #+#             */
+/*   Updated: 2023/03/30 11:26:44 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	struct_check(t_data *data)
+int	join_threads(t_data *data)
 {
-	if (data->nb_philo <= 0)
-		return (1);
-	if (data->time_to_die <= 0)
-		return (1);
-	if (data->time_to_eat <= 0)
-		return (1);
-	if (data->time_to_sleep <= 0)
-		return (1);
-	if (data->nb_must_eat == -1 || data->nb_must_eat == 0)
-		return (1);
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (pthread_join(data->philosophers[i], NULL) != 0)
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
-int	ft_check_args(char **av)
+int	destroy_mutex(t_data *data)
 {
 	int	i;
-	int	j;
 
-	i = 1;
-	while (av[i])
+	i = 0;
+	while (i < data->nb_philo)
 	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (av[i][j] >= 48 && av[i][j] <= 57)
-				j++;
-			else
-				return (1);
-		}
+		if (pthread_mutex_destroy(&data->fork[i]) != 0)
+			return (1);
 		i++;
 	}
+	if (pthread_mutex_destroy(&data->lock_data) != 0)
+		return (1);
 	return (0);
 }
