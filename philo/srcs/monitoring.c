@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:01:35 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/30 11:32:07 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:51:22 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,11 @@ static void	nb_check(t_data *data)
 int	monitoring(t_data *data)
 {
 	int	is_alive;
+	int	nb_philo;
 
 	pthread_mutex_lock(&data->lock_data);
 	is_alive = data->is_alive;
+	nb_philo = data->nb_philo;
 	pthread_mutex_unlock(&data->lock_data);
 	while (is_alive)
 	{
