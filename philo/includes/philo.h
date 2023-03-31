@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:22 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/30 11:39:45 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/03/31 08:14:31 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		ft_check_args(char **av);
 int		struct_check(t_data *data);
 /*error*/
 void	free_everthing(t_data *data);
-int		error_exit(t_data *data, char *msg, int i);
+int		error_exit(t_data *data, char *msg, int i, int size);
 /*utils*/
 int		ft_atoi(const char *str);
 int		get_time_philo(t_philo *philo);
@@ -81,7 +81,7 @@ int		get_time(void);
 void	ft_usleep(int ms);
 void	show_msg(t_philo *philo, char *msg);
 /*utils_2*/
-int		join_threads(t_data *data);
-int		destroy_mutex(t_data *data);
+int		join_threads(t_data *data, int size);
+int		destroy_mutex(t_data *data, int size);
 
 #endif
