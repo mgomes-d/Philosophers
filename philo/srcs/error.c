@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:41:56 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/04/03 08:38:53 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/04/03 08:42:31 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	destroy_mutex_error(t_data *data, int size)
 	while (size)
 	{
 		if (pthread_mutex_destroy(&data->fork[size]) != 0)
-			return (1);
+			break ;
 		size--;
 	}
 	if (pthread_mutex_destroy(&data->lock_data) != 0)

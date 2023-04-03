@@ -6,15 +6,14 @@
 #    By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/21 07:42:21 by mgomes-d          #+#    #+#              #
-#    Updated: 2023/04/03 07:52:58 by mgomes-d         ###   ########.fr        #
+#    Updated: 2023/04/03 08:43:02 by mgomes-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror #$(THREAD_FLAG)
-THREAD_FLAG = -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
 INC_DIR = includes
