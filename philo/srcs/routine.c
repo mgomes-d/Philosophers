@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 09:41:53 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/30 11:56:03 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/04/03 07:59:53 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,37 @@
 
 void	sleeping(t_philo *philo)
 {
+	int	time;
+
+	pthread_mutex_lock(&philo->data->lock_data);
+	time = philo->data->time_to_sleep;
+	pthread_mutex_unlock(&philo->data->lock_data);
 	show_msg(philo, MSG_SLEEP);
-	ft_usleep(philo->data->time_to_sleep);
+	ft_usleep(time);
 	return ;
 }
 
 int	eating(t_philo *philo, int nb_philo)
 {
-	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(philo->right_fork);
 	show_msg(philo, MSG_FORK);
 	if (nb_philo == 1)
 	{
-		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
 		return (1);
 	}
-	pthread_mutex_lock(philo->right_fork);
+	pthread_mutex_lock(philo->left_fork);
 	show_msg(philo, MSG_FORK);
 	show_msg(philo, MSG_EAT);
 	pthread_mutex_lock(&philo->data->lock_data);
-	philo->meals_time += 1;
 	philo->time_last_meal = get_time();
 	pthread_mutex_unlock(&philo->data->lock_data);
 	ft_usleep(philo->data->time_to_eat);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_lock(&philo->data->lock_data);
+	philo->meals_time += 1;
+	pthread_mutex_unlock(&philo->data->lock_data);
 	return (0);
 }
 

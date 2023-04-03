@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 09:01:35 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/31 09:41:46 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/04/03 08:35:31 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	eating_philo(t_data *data)
 		pthread_mutex_unlock(&data->lock_data);
 		if ((get_time() >= time_die + last_meal))
 		{
-			printf("%d %d died\n", get_time() - data->start_time, i + 1);
+			show_msg(data->philo, MSG_DIE);
 			pthread_mutex_lock(&data->lock_data);
 			data->is_alive = 0;
 			pthread_mutex_unlock(&data->lock_data);
@@ -75,11 +75,9 @@ static void	nb_check(t_data *data)
 int	monitoring(t_data *data)
 {
 	int	is_alive;
-	int	nb_philo;
 
 	pthread_mutex_lock(&data->lock_data);
 	is_alive = data->is_alive;
-	nb_philo = data->nb_philo;
 	pthread_mutex_unlock(&data->lock_data);
 	while (is_alive)
 	{
