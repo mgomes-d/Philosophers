@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 07:41:56 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/31 09:38:42 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/04/03 08:38:53 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ int	error_exit(t_data *data, char *msg, int i, int size)
 	while (msg[index])
 		index++;
 	write (2, msg, index);
+	error_utils(data, i, size);
 	if (i >= 1)
 		free(data->fork);
 	if (i >= 2)
 		free(data->philo);
 	if (i >= 3)
 		free(data->philosophers);
-	error_utils(data, i, size);
 	return (1);
 }
 
