@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:40 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/04/03 07:35:29 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:29:41 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,3 @@ void	show_msg(t_philo *philo, char *msg)
 		printf("%d %d %s\n", time, philo->philo_id, msg);
 	return ;
 }
-
-//	write(2, "tg\n", 3);

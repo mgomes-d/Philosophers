@@ -6,7 +6,7 @@
 /*   By: mgomes-d <mgomes-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 07:49:22 by mgomes-d          #+#    #+#             */
-/*   Updated: 2023/03/31 08:14:31 by mgomes-d         ###   ########.fr       */
+/*   Updated: 2023/04/03 09:03:50 by mgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_data
 	int				timestamp_ms;
 	int				time;
 	int				start_time;
-	pthread_mutex_t	*time_mutex;
 	t_philo			*philo;
 	pthread_t		*philosophers;
 	pthread_mutex_t	*fork;
